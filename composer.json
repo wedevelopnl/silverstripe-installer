@@ -22,7 +22,7 @@
     "post-create-project-cmd": [
       "php -r \"unlink('app/src/Page.php');\"",
       "php -r \"unlink('app/src/PageController.php');\"",
-      "npm i",
+      "npm install --verbose",
       "npm run build"
     ]
   },
