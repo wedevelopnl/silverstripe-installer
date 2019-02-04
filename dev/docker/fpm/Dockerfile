@@ -15,8 +15,9 @@ ENV XSL_DEPS libxslt-dev
 ENV TIDY_DEPS tidyhtml-dev
 ENV ZIP_DEPS zlib-dev
 ENV SS_DEPS bash
+ENV MAKE_DEPS make
 RUN set -xe \
-    && apk add --no-cache $GD_DEPS $INTL_DEPS $XSL_DEPS $TIDY_DEPS $ZIP_DEPS $SS_DEPS \
+    && apk add --no-cache $GD_DEPS $INTL_DEPS $XSL_DEPS $TIDY_DEPS $ZIP_DEPS $SS_DEPS $MAKE_DEPS \
     && docker-php-ext-configure intl \
     && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \

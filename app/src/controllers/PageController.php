@@ -13,7 +13,6 @@ namespace {
 
             Requirements::css('themes/default/css/main.css');
             Requirements::javascript('themes/default/javascript/bundle.js');
-
         }
     }
 }
