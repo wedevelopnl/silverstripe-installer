@@ -4,20 +4,14 @@ Extension on the default silverstripe installer
 ## Usage
 Run
 ```
-composer create-project thewebmen/silverstripe-installer .
+docker run composer create-project thewebmen/silverstripe-installer . --ignore-platform-reqs
 ```
 
 Then use the following setup for docker:
 
-1. `cp docker-compose.override.yml.dist docker-compose.override.yml`
-2. Run `composer config cache-dir` to get the cache directory and set it in `docker-compose.override.yml` 
-3. `docker-compose up`
-4. Open http://localhost:10080
+1. `docker-compose up`
+2. Open http://localhost:8080
 
-#### Linux
-
-If you're using linux should uncomment the `users` key in `docker-compose.override.yml` with your own UID.
-You can figure out your UID by executing the `id` command as yourself.
 
 ## Gulp
 The following gulp commands are available:
@@ -35,3 +29,9 @@ Replace the following variables in deploy.php:
 - hostname
 - user
 - deploy_path
+
+## Requirements
+
+- Composer
+- NPM
+- Docker
