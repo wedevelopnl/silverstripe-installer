@@ -4,7 +4,7 @@ Extension on the default silverstripe installer
 ## Usage
 Run
 ```
-docker run composer create-project thewebmen/silverstripe-installer . --ignore-platform-reqs
+composer create-project thewebmen/silverstripe-installer . --ignore-platform-reqs
 ```
 
 Then use the following setup for docker:
