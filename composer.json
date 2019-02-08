@@ -38,7 +38,8 @@
       "docker-compose.override.yml.dist",
       "docker-compose.yml",
       "dev/*",
-      ".env.docker"
+      ".env.docker",
+      ".editorconfig"
     ],
     "public-files": [
       "assets/*",
