@@ -23,9 +23,28 @@ RUN set -xe \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) bcmath gd intl mysqli pdo_mysql soap tidy xsl zip
 
-COPY ./production.ini $PHP_INI_DIR/conf.d/
+COPY dev/docker/fpm/production.ini $PHP_INI_DIR/conf.d/
 
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+WORKDIR /var/www
+
+COPY composer.json composer.lock ./
+
+RUN set -eux; \
+    composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest; \
+    composer clear-cache
+
+COPY app app/
+COPY public public/
+COPY themes themes/
+
+RUN set -eux; \
+    composer dump-autoload --classmap-authoritative --no-dev; \
+    composer run-script --no-dev post-install-cmd; \
+    composer vendor-expose copy
+
+RUN chown -R www-data:www-data public
+
+COPY dev/docker/fpm/docker-entrypoint.sh /usr/local/bin/docker-entrypoint
 RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]

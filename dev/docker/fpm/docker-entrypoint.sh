@@ -7,6 +7,7 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 if [ "$1" = 'php-fpm' ] && [ "$SS_ENVIRONMENT_TYPE" != 'live' ]; then
+    chown -R www-data:www-data public
     composer install --prefer-dist --no-progress --no-suggest --no-interaction
 
     until nc -z -v -w30 $SS_DATABASE_SERVER 3306
