@@ -22,6 +22,11 @@ RUN set -xe \
     && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) bcmath gd intl mysqli pdo_mysql soap tidy xsl zip
+    
+RUN apk --update --no-cache add autoconf g++ make && \
+    pecl install -f xdebug && \
+    docker-php-ext-enable xdebug && \
+    apk del --purge autoconf g++ make    
 
 COPY dev/docker/fpm/production.ini $PHP_INI_DIR/conf.d/
 
