@@ -1,59 +1,57 @@
 {
-  "name": "thewebmen/silverstripe-installer",
-  "type": "silverstripe-recipe",
-  "description": "Extension on the default silverstripe installer",
-  "authors": [{
-    "name": "Michel van der Steege",
-    "email": "michel@thewebmen.com"
-  }],
-  "require": {
-    "php": ">=5.6.0",
-    "silverstripe/recipe-plugin": "^1.2",
-    "silverstripe/recipe-cms": "4.4.x-dev"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^5.7",
-    "roave/security-advisories": "dev-master",
-    "friendsofphp/php-cs-fixer": "^2.14"
-  },
-  "config": {
-    "process-timeout": 600
-  },
-  "scripts": {
-    "post-create-project-cmd": [
-      "php -r \"unlink('app/src/Page.php');\"",
-      "php -r \"unlink('app/src/PageController.php');\"",
-      "npm install --verbose",
-      "npm run build"
-    ]
-  },
-  "extra": {
-    "project-files": [
-      "app/*",
-      "themes/*",
-      ".eslintrc",
-      "gulpfile.js",
-      "package.json",
-      "webpack.config.js",
-      "docker-compose.override.yml.dist",
-      "docker-compose.yml",
-      "dev/*",
-      ".env.docker",
-      ".editorconfig"
+    "name": "thewebmen/silverstripe-installer",
+    "type": "silverstripe-recipe",
+    "description": "Extension on the default silverstripe installer",
+    "authors": [
+        {
+            "name": "Michel van der Steege",
+            "email": "michel@thewebmen.com"
+        }
     ],
-    "public-files": [
-      "assets/*",
-      "favicon.ico"
-    ],
-    "branch-alias": {
-      "4.x-dev": "4.4.x-dev"
+    "require": {
+        "php": ">=5.6.0",
+        "silverstripe/recipe-plugin": "^1.2",
+        "silverstripe/recipe-cms": "4.4.x-dev"
     },
-    "resources-dir": "_resources",
-    "expose": [
-      "themes/default/css",
-      "themes/default/javascript"
-    ]
-  },
-  "prefer-stable": true,
-  "minimum-stability": "dev"
+    "require-dev": {
+        "phpunit/phpunit": "^5.7",
+        "roave/security-advisories": "dev-master"
+    },
+    "config": {
+        "process-timeout": 600
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "php -r \"unlink('app/src/Page.php');\"",
+            "php -r \"unlink('app/src/PageController.php');\"",
+            "npm install --verbose",
+            "npm run build"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "4.x-dev": "4.4.x-dev"
+        },
+        "resources-dir": "_resources",
+        "expose": [
+            "themes/default/css",
+            "themes/default/javascript"
+        ],
+        "project-files-installed": [
+            "app/.htaccess",
+            "app/_config.php",
+            "app/_config/mysite.yml",
+            "app/src/Page.php",
+            "app/src/PageController.php"
+        ],
+        "public-files-installed": [
+            ".htaccess",
+            "index.php",
+            "install-frameworkmissing.html",
+            "install.php",
+            "web.config"
+        ]
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
 }
