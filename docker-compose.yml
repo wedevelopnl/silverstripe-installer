@@ -32,15 +32,5 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-      - mariadb
-    ports:
-      - 10081:80
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      PMA_HOST: mariadb
-
 volumes:
   mariadb-volume:
