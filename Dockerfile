@@ -6,7 +6,6 @@ RUN apk update && apk upgrade\
 RUN apk add mysql-client --update --no-cac
 RUN apk add wget curl git php php-curl php-openssl php-json php-phar php-dom php-intl --update && rm /var/cache/apk/*
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-RUN composer global require hirak/prestissimo
 RUN apk add --update nodejs nodejs-npm
 
 ENV GD_DEPS freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev
