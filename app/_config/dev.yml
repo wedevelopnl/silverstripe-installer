@@ -1,0 +1,6 @@
+---
+Only:
+  environment: 'dev'
+---
+SilverStripe\View\SSViewer:
+  source_file_comments: false

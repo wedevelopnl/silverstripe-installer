@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+//=======================================================
+//  VENDORS
+//=======================================================
+// FONTS
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap");
+
+// MISC
+@import "~@splidejs/splide/dist/css/splide-core.min.css";
+@import "~tippy.js/dist/tippy.css";
+@import "~tippy.js/themes/light.css";
+
+//  LOAD BULMA VARIABLES & FUNCTIONS
+@import "~bulma/sass/utilities/all";
+
+//  LOAD CORE VARIABLES
+@import "core/utilities/variables";
+
+//  LOAD THEME VARIABLES
+@import "theme/utilities/variables";
+
+//  BULMA
+@import "~bulma/sass/utilities/controls";
+@import "~bulma/sass/utilities/mixins";
+@import "~bulma/sass/base/all";
+@import "~bulma/sass/elements/all";
+@import "~bulma/sass/helpers/all";
+@import "~bulma/sass/components/card.sass";
+@import "~bulma/sass/components/breadcrumb.sass";
+@import "~bulma/sass/components/media.sass";
+@import "~bulma/sass/components/message.sass";
+@import "~bulma/sass/components/modal.sass";
+@import "~bulma/sass/grid/all";
+
+//=======================================================
+//  CORE
+//=======================================================
+
+// Base
+@import "core/base/colors";
+@import "core/base/helpers";
+
+// Components
+@import "core/components/card";
+@import "core/components/offcanvas";
+@import "core/components/visual";
+
+// Elements
+@import "core/elements/backdrop";
+@import "core/elements/button";
+@import "core/elements/content";
+@import "core/elements/icon";
+@import "core/elements/items";
+@import "core/elements/nav";
+@import "core/elements/tables";
+
+// Form
+@import "core/form/checkbox-radio";
+@import "core/form/field-is-required";
+@import "core/form/input-textarea";
+@import "core/form/select";
+@import "core/form/tools";
+
+// Grid
+@import "core/grid/columns";
+
+// Layout
+@import "core/layout/admin";
+@import "core/layout/holygrail";
+@import "core/layout/section";
+
+// Silverstripe
+@import "core/silverstripe/message";
+@import "core/silverstripe/image";
+
+//=======================================================
+//  THEME
+//=======================================================
+
+// Base
+//@import "theme/base/colors";

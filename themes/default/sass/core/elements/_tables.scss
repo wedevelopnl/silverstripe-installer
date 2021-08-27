@@ -1,0 +1,26 @@
+//=======================================================
+//  TABLES
+//=======================================================
+table,
+.content table {
+    @extend .table;
+    width: 100%;
+
+    thead,
+    tbody {
+        th {
+            font-weight: $weight-semibold;
+        }
+
+        td,
+        th {
+            border-color: $border;
+            color: $text;
+
+            &.is-narrow {
+                width: 1%;
+                white-space: nowrap;
+            }
+        }
+    }
+}

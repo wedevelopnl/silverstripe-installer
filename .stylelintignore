@@ -1,0 +1,6 @@
+vendor/**/*.css
+vendor/**/*.scss
+public/**/*.css
+public/**/*.scss
+node_modules/**/*.scss
+themes/default/bundles/*.css

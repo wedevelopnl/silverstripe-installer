@@ -1,0 +1,30 @@
+.card {
+    border-radius: $radius;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-footer {
+    margin-top: auto;
+    padding: $card-content-padding;
+}
+
+.card-header {
+    box-shadow: none;
+    border: 0;
+    margin: 0;
+
+    .card-header-title {
+        padding: $card-content-padding;
+        margin: 0;
+        display: block;
+    }
+}
+
+.has-cards-stretched {
+    .card {
+        &:not(.is-unstretched) {
+            min-height: 100%;
+        }
+    }
+}

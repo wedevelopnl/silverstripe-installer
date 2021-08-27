@@ -1,0 +1,41 @@
+.section:not(li) {
+    padding: $section-padding-normal $column-gap;
+    margin: 0;
+
+    // SPACINGS SIZES
+    @each $name, $value in $sectionPaddings {
+        // Margins
+        &.is-#{$name} {
+            padding-top: #{$value};
+            padding-bottom: #{$value};
+        }
+    }
+
+    // REMOVE DOUBLE PADDING
+    &:not([class*="has-background-"]):not(.is-styled) {
+        + .section:not([class*="has-background-"]):not(.is-styled) {
+            padding-top: 0;
+        }
+    }
+    @each $name, $pair in $colors {
+        &.has-background-#{$name}:not(.is-styled) {
+            + .section.has-background-#{$name}:not(.is-styled) {
+                padding-top: 0;
+            }
+        }
+    }
+
+    &.is-gapless {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+@media(max-width: $tablet) {
+    .section:not(li) {
+        &:not(.is-small):not(.is-smaller):not(.is-none) {
+            padding-top: $section-padding-mobile;
+            padding-bottom: $section-padding-mobile;
+        }
+    }
+}

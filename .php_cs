@@ -6,6 +6,7 @@ $finder = PhpCsFixer\Finder::create()
 
 return PhpCsFixer\Config::create()
     ->setRules([
+        '@PHP74Migration' => true,
         '@PSR2' => true,
         'strict_param' => true,
         'cast_spaces' => ['space' => 'none'],

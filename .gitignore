@@ -1,8 +1,10 @@
-.idea/
-vendor/
-node_modules/
 /silverstripe-cache/
 /.env
-/themes/simple/
-/_resources/
+/vendor/
 /public/_resources/
+/public/assets/.htaccess
+/public/assets/.protected/.htaccess
+/node_modules/
+/.php_cs.cache
+/.idea
+/themes/default/bundles

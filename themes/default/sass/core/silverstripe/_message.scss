@@ -1,0 +1,47 @@
+// SILVERSTRIPE MESSAGES
+.message {
+    border: $border-1;
+    padding: 0.5rem 1rem;
+    font-size: $size-8;
+    line-height: 1.25rem;
+    background-color: $text-bg;
+    border-color: $text;
+    display: block;
+    border-radius: $radius-rounded;
+
+    &.info {
+        color: $info;
+        background-color: $info-bg;
+        border-color: $info;
+    }
+
+    &.notice,
+    &.warning,
+    &.validation {
+        color: $warning;
+        background-color: $warning-bg;
+        border-color: $warning;
+    }
+
+    &.bad,
+    &.error,
+    &.danger,
+    &.required {
+        color: $danger;
+        background-color: $danger-bg;
+        border-color: $danger;
+    }
+
+    &.good,
+    &.success {
+        color: $success;
+        background-color: $success-bg;
+        border-color: $success;
+    }
+}
+
+form {
+    .message {
+        margin-top: 0.75rem;
+    }
+}

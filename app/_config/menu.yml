@@ -1,0 +1,3 @@
+TheWebmen\Menustructure\Model\Menu:
+  protected_menus:
+    - 'main-nav'

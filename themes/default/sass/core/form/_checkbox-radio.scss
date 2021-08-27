@@ -1,0 +1,8 @@
+input[type=checkbox],
+input[type=radio] {
+    + label {
+        display: inline;
+        font-weight: $body-weight;
+        font-size: unset;
+    }
+}

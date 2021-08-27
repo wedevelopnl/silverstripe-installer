@@ -1,0 +1,123 @@
+//=======================================================
+//  FIELD
+//=======================================================
+fieldset {
+    margin-bottom: $spacing-smaller;
+}
+
+//=======================================================
+//  DEFAULT FORM FIELDS
+//=======================================================
+input:not([type=checkbox]):not([type=radio]):not([type=submit]),
+select,
+textarea,
+.form-field {
+    display: block;
+    height: $element-normal;
+    color: $text;
+    width: 100%;
+    padding: 0 $element-padding;
+    border: $border-1;
+    border-radius: $radius;
+    box-shadow: none;
+    transition: $transition-1;
+    background-color: $white-bis;
+    font-family: $family-primary;
+    font-size: $size-7;
+    font-weight: $body-weight;
+    line-height: $body-line-height;
+
+    // PLACEHOLDER
+    &::placeholder {
+        color: $placeholder;
+    }
+
+    &:focus {
+        outline: 0;
+        border-color: $primary;
+
+        + .form-field {
+            border-color: $primary;
+        }
+
+        &::placeholder {
+            color: $text;
+        }
+    }
+
+    // AUTOFILL
+    &:-webkit-autofill {
+        -webkit-text-fill-color: $text;
+        -webkit-box-shadow: 0 0 0 1000px $white inset;
+        transition: background-color 5000s ease-in-out 0s;
+        font-size: $size-7 !important;
+    }
+
+    // SET SINGLE SIZE
+    @each $name, $pair in $elements {
+        $height: nth($pair, 1);
+        $size: nth($pair, 2);
+
+        &.is-#{$name} {
+            line-height: $size !important;
+            font-size: $size !important;
+            height: $height !important;
+        }
+    }
+}
+
+input {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+textarea {
+    height: $textarea-height;
+    padding: $element-padding;
+}
+
+// SET ALL SIZES
+@each $name, $pair in $elements {
+    $height: nth($pair, 1);
+    $size: nth($pair, 2);
+    $label: nth($pair, 3);
+    $icon: nth($pair, 4);
+
+    .has-elements-#{$name} {
+        .label,
+        label {
+            font-size: $label;
+        }
+
+        input:not([type=checkbox]):not([type=radio]):not([type=submit]),
+        select,
+        textarea,
+        .form-field {
+            height: $height;
+            line-height: $size;
+            font-size: $size;
+        }
+
+        textarea {
+            height: $textarea-height;
+        }
+
+        input[type=checkbox],
+        input[type=radio] {
+            + label {
+                font-size: $size;
+            }
+        }
+    }
+}
+
+// ROUNDED
+.has-elements-rounded {
+    input:not([type=checkbox]):not([type=radio]):not([type=submit]),
+    select,
+    textarea,
+    .form-field {
+        border-radius: $radius-rounded;
+    }
+}

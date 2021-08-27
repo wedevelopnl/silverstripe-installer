@@ -1,0 +1,4 @@
+.field.is-required label::after {
+    content: " *";
+    color: $secondary;
+}

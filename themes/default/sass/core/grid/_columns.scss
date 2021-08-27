@@ -1,0 +1,65 @@
+$column-gap-small: $column-gap / 2;
+
+.container {
+    &.is-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
+.grid-in-grid {
+    .section {
+        padding: 0;
+    }
+
+    .container {
+        max-width: none;
+        margin: 0;
+    }
+}
+
+//=======================================================
+//  UNDO BULMA DEFAULT COLUMN
+//=======================================================
+.columns {
+    display: flex;
+    flex-wrap: wrap;
+
+    &.is-small {
+        margin: -$column-gap-small;
+
+        > .column {
+            padding: $column-gap-small;
+        }
+    }
+
+    &.is-gutterless {
+        margin: 0;
+
+        > .column {
+            padding: 0;
+        }
+    }
+}
+
+.column {
+    width: 100%;
+    flex-basis: auto;
+    flex-grow: unset;
+    flex-shrink: 0;
+
+    // ADD BULMA DEFAULT COLUMN CLASS
+    &.is-fill {
+        flex-basis: 0;
+        flex-grow: 1;
+        flex-shrink: 1;
+    }
+}
+
+@media screen and (min-width: $tablet) {
+    .column {
+        &.is-narrow {
+            width: auto;
+        }
+    }
+}

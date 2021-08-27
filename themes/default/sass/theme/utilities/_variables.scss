@@ -1,0 +1,277 @@
+//=======================================================
+//  INITIAL VARIABLES
+//=======================================================
+
+// SHADES (list: $shades)
+$black:                     hsl(0, 0%, 0%);
+$black-bis:                 hsl(0, 0%, 5%);
+$black-ter:                 hsl(0, 0%, 10%);
+$grey-darker:               hsl(0, 0%, 15%);
+$grey-dark:                 hsl(0, 0%, 20%);
+$grey:                      hsl(0, 0%, 25%);
+$grey-medium:               hsl(0, 0%, 55%);
+$grey-light:                hsl(0, 0%, 65%);
+$grey-lighter-alt:          hsl(222, 10%, 80%);
+$grey-lighter:              hsl(0, 0%, 90%);
+$white-ter: 	            hsl(220, 55%, 96%);
+$white-bis: 	            hsl(220, 55%, 98%);
+$white:                     hsl(0, 0%, 100%);
+
+// COLORS (list: $colors)
+$red:                       hsl(11, 96%, 48%);
+$red-lightest:              hsl(11, 96%, 97%);
+$orange:                    hsl(27, 100%, 47%);
+$orange-lightest:           hsl(27, 100%, 97%);
+$green:                     hsl(128, 49%, 51%);
+$green-lightest:            hsl(128, 49%, 97%);
+$blue:                      hsl(197, 100%, 31%);
+$blue-lightest:             hsl(197, 100%, 97%);
+$yellow:                    hsl(44, 100%, 48%);
+$yellow-lightest:           hsl(44, 100%, 97%);
+
+// SIZES (list: $sizes)
+$size-1:                    3.111111111rem;     // 56px
+$size-2:                    2.666666667rem;     // 48px
+$size-3:                    2.222222222rem;     // 40px
+$size-4:                    1.777777778rem;     // 32px
+$size-5:                    1.333333333rem;     // 24px
+$size-6:                    1.111111111rem;     // 20px
+$size-7:                    1rem;               // 18px
+$size-8:                    0.888888888rem;     // 16px
+$size-9:                    0.777777777rem;     // 14px
+
+// WEIGHTS
+$weight-semibold:           600;
+
+// MISC
+$radius:                    5px;
+$radius-medium:             10px;
+$border-size-1:             1px;
+$border-size-2:             2px;
+$border-size-theme:         4px;
+
+//=======================================================
+//  DERIVED VARIABLES
+//=======================================================
+$body-background-color:     $white;
+$border:                    $grey-lighter;
+
+$primary:                   $blue;
+$secondary:                 $orange;
+
+$text-lightest:             $white-bis;
+$text:                      $black;
+
+$link:                      $primary;
+$link-hover:                findDarkColor($primary);
+
+$text-bg:                   $text-lightest;
+$info:                      $blue;
+$info-bg:                   $blue-lightest;
+$success:                   $green;
+$success-bg:                $green-lightest;
+$warning:                   $orange;
+$warning-bg:                $orange-lightest;
+$danger:                    $red;
+$danger-bg:                 $red-lightest;
+
+$family-primary:            "Source Sans Pro", sans-serif;
+$family-secondary:          "Source Sans Pro", sans-serif;
+
+//=======================================================
+//  GENERIC VARIABLES
+//=======================================================
+$body-size:                 18px;
+$body-line-height:          1.777778;
+$body-weight:               $weight-light;
+$body-family:               $family-primary;
+
+// BUTTONS
+$control-border-width:      1px;
+$button-padding-vertical:   0;
+$button-padding-horizontal: 2.222222222em;
+
+// CONTENT
+$content-heading-color:     unset;
+$title-size:                $size-1;
+$title-color:               unset;
+$title-weight:              $weight-normal;
+$title-line-height:         1.125;
+
+// GRID
+$gap:                       30px;
+$column-gap:                15px;
+
+$tablet:                    768px;
+$desktop:                   1024px;
+$widescreen:                1140px + (2 * $gap);
+$fullhd-enabled:            true;
+$offcanvas:                 $desktop - 1px;
+
+//=======================================================
+//  CUSTOM VARIABLES
+//=======================================================
+
+// SPACINGS
+$item-spacing:              0.5em;
+
+$spacing-smallest:          0.555555556rem; // 10px
+$spacing-smaller:           0.833333333rem; // 15px
+$spacing-small:             1.111111111rem; // 20px
+$spacing-normal:            1.666666667rem; // 30px
+$spacing-medium:            2.222222222rem; // 40px
+$spacing-large:             2.777777778rem; // 50px
+$spacing-larger:            3.333333333rem; // 60px
+
+// SPACINGS
+$spacing-values: (
+    "0": 0,
+    "1": $spacing-smaller,
+    "2": $spacing-small,
+    "3": $spacing-normal,
+    "4": $spacing-medium,
+    "5": $spacing-large,
+    "6": $spacing-larger,
+    "auto": auto
+);
+
+// SECTIONS
+$section-padding-smallest:      10px;
+$section-padding-smaller:       30px;
+$section-padding-small:         50px;
+$section-padding-normal:        80px;
+$section-padding-medium:        125px;
+$section-padding-large:         175px;
+$section-padding-larger:        250px;
+
+$section-padding-mobile:        $section-padding-small;
+
+$sectionPaddings: (
+    "none": 0,
+    "smallest": $section-padding-smallest,
+    "smaller": $section-padding-smaller,
+    "small": $section-padding-small,
+    "normal": $section-padding-normal
+);
+
+// IMAGES
+$dimensions:                100;
+
+// VISUALS
+$visual-height-smaller:     150px;
+$visual-height-small:       250px;
+$visual-height:             320px;
+$visual-height-medium:      400px;
+$visual-height-large:       500px;
+$visual-height-larger:      650px;
+$visual-overlay:            rgba($black, 0.1);
+
+// ELEMENTS (form fields & buttons)
+$label-size:                $size-9;
+$label-weight:              $weight-normal;
+
+$placeholder:               rgba($text, 0.33);
+
+$element-smallest:          1.333333333rem;     // 24px
+$element-smaller:           2rem;               // 36px
+$element-small:             2.5rem;             // 45px
+$element-normal:            3.277777778rem;     // 59px
+$element-medium:            3rem;               // 54px
+$element-large:             3.5rem;             // 63px
+$element-larger:            4rem;               // 72px
+
+$element-padding:           0.75em;
+$element-shadow:            0 5px 10px rgba($black, 0.1);
+$textarea-height:           5em;
+
+$element-size-normal:       $size-6;
+$element-icon-normal:       $size-5;
+
+$elements: (
+    "smallest": ($element-smallest, $size-9, $label-size, $size-7),
+    "smaller": ($element-smaller, $size-9, $label-size, $size-7),
+    "small": ($element-small, $size-8, $label-size, $element-icon-normal),
+    "normal": ($element-normal, $element-size-normal, $label-size, $element-icon-normal),
+    "medium": ($element-medium, $size-6, $size-8, $size-5),
+    "large": ($element-large, $size-5, $size-7, $size-4),
+    "larger": ($element-larger, $size-4, $size-6, $size-3)
+);
+
+// TRANSITION
+$transition-time:           0.25s;
+$transition-animation:      ease-out;
+$transition-1:              all $transition-time $transition-animation;
+
+// SHADOW
+$shadow-smaller:            5px 5px 10px rgba($black, 0.1);
+$shadow:                    0 95px 30px -80px rgba($black, 0.1);
+$text-shadow:               0 15px 50px rgba($black, 0.33);
+
+// OFF CANVAS
+$backdrop:                  rgba($black, 0.5);
+$offcanvas-width:           350px;
+$offcanvas-brand-height:    35px;
+
+// NAV
+$nav-gutter:                30px;
+$nav-gutter-small:          20px;
+$nav-gutter-smaller:        10px;
+$nav-gutter-vertical:       7px;
+
+//=======================================================
+//  BULMA VARIABLES
+//=======================================================
+
+// CARD
+$card-background-color:                 $white;
+$card-content-padding:                  1.333333333rem;
+$card-shadow:                           10px 10px 20px rgba($black, 0.1);
+$card-shadow-hover:                     0 7px 25px rgba($black, 0.2);
+
+// HR
+$hr-background-color:                   $border;
+$hr-height:                             1px;
+$hr-margin:                             $spacing-normal 0;
+
+// PROGRESS
+$progress-bar-background-color:         $white-ter;
+$progress-border-radius:                $radius-rounded 0 $radius-rounded $radius-rounded;
+
+// MODAL
+$modal-background-background-color:     $backdrop;
+$modal-card-head-background-color:      $white;
+$modal-card-head-border-bottom:         none;
+$modal-content-width:                   760px;
+$modal-card-head-padding:               32px;
+$modal-card-body-padding:               32px;
+
+// BORDER
+$border-1:                              $border-size-1 solid $border;
+$border-2:                              $border-size-2 solid $border;
+$border-theme:                          $border-size-theme solid $border;
+
+// BLOCKS
+$block-spacing:                         1.666666667rem; // 30px
+
+//=======================================================
+//  LOAD BULMA DERIVED VARIABLES & MAP COLORS
+//=======================================================
+@import "~bulma/sass/utilities/derived-variables";
+
+$sizes: $size-1 $size-2 $size-3 $size-4 $size-5 $size-6 $size-7 $size-8 $size-9;
+
+$addColors: (
+    "black":($black, $white),
+    "white":($white, $primary),
+    "white-ter":($white-ter, $text),
+    "text":($text, $white),
+    "primary":($primary, $white),
+    "facebook":($facebook, $white),
+    "twitter":($twitter, $white),
+    "youtube":($youtube, $white),
+    "instagram":($instagram, $white),
+    "linkedin":($linkedin, $white),
+    "whatsapp":($whatsapp, $white),
+    "google":($google, $white),
+);
+$colors: map-merge($colors, $addColors);

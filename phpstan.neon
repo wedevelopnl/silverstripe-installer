@@ -1,0 +1,9 @@
+parameters:
+    level: 2
+    paths:
+        - app/src
+    universalObjectCratesClasses:
+        - SilverStripe\Control\Controller
+
+includes:
+    - vendor/symbiote/silverstripe-phpstan/phpstan.neon

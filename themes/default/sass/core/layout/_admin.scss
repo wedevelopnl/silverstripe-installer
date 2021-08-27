@@ -1,0 +1,19 @@
+#MemberLoginForm_LoginForm {
+    input:not([type=checkbox]):not([type=radio]):not([type=submit]),
+    select,
+    textarea,
+    .form-field {
+        width: 330px;
+    }
+
+    input.checkbox {
+        + label,
+        + legend.left {
+            padding-left: 2em;
+
+            &::before {
+                top: 0;
+            }
+        }
+    }
+}

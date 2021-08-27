@@ -1,46 +1,52 @@
-FROM php:7.2-fpm-alpine
+ARG ALPINE_VERSION=3.10
+ARG NODE_VERSION=15.7
+
+FROM node:$NODE_VERSION-alpine$ALPINE_VERSION AS node
+FROM php:7.4-fpm-alpine$ALPINE_VERSION AS php-fpm
+
+ARG ALPINE_VERSION
+
+# https://gitlab.com/gitlab-com/support-forum/issues/4506#note_168031167
+RUN echo "http://mirror.leaseweb.com/alpine/v$ALPINE_VERSION/main" > /etc/apk/repositories
+RUN echo "http://mirror.leaseweb.com/alpine/v$ALPINE_VERSION/community" >> /etc/apk/repositories
 
 RUN apk update && apk upgrade\
    wget
 
-RUN apk add mysql-client --update --no-cac
-RUN apk add wget curl git php php-curl php-openssl php-json php-phar php-dom php-intl --update && rm /var/cache/apk/*
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
-RUN composer global require hirak/prestissimo
-RUN apk add --update nodejs nodejs-npm
+RUN apk add --no-cache libzip-dev && docker-php-ext-configure zip && docker-php-ext-install zip
+RUN apk add --no-cache curl bash make mysql-client git icu-dev libjpeg-turbo-dev libpng-dev acl
+RUN docker-php-ext-configure gd --with-jpeg=/usr/include/
+RUN docker-php-ext-install pdo_mysql intl gd
 
-ENV GD_DEPS freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev
-ENV INTL_DEPS icu-dev
-ENV XSL_DEPS libxslt-dev
-ENV TIDY_DEPS tidyhtml-dev
-ENV ZIP_DEPS zlib-dev
-ENV SS_DEPS bash
-ENV MAKE_DEPS make
-RUN set -xe \
-    && apk add --no-cache $GD_DEPS $INTL_DEPS $XSL_DEPS $TIDY_DEPS $ZIP_DEPS $SS_DEPS $MAKE_DEPS \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-configure mysqli --with-mysqli=mysqlnd \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) bcmath gd intl mysqli pdo_mysql soap tidy xsl zip
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-COPY dev/docker/fpm/production.ini $PHP_INI_DIR/conf.d/
+COPY dev/docker/fpm/default.ini $PHP_INI_DIR/conf.d/
 
-WORKDIR /var/www
+WORKDIR /app
 
-COPY composer.json composer.lock ./
+COPY composer.json composer.lock* ./
 
-RUN set -eux; \
-    composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress --no-suggest; \
-    composer clear-cache
+RUN composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress
+RUN composer clear-cache
 
+COPY phpstan.neon ./
 COPY app app/
 COPY public public/
 COPY themes themes/
 
-RUN set -eux; \
-    composer dump-autoload --classmap-authoritative --no-dev; \
-    composer run-script --no-dev post-install-cmd; \
-    composer vendor-expose copy
+RUN apk add --no-cache libstdc++
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
+RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
+
+COPY .npmrc package.json package-lock.json webpack.config.js stylelint.config.js .stylelintignore .eslintrc.js ./
+RUN npm install
+RUN npm run build
+RUN rm -rf node_modules
+
+RUN composer dump-autoload --classmap-authoritative --no-dev
+RUN composer run-script --no-dev post-install-cmd
+RUN composer vendor-expose copy
 
 RUN chown -R www-data:www-data public
 
@@ -49,3 +55,40 @@ RUN chmod +x /usr/local/bin/docker-entrypoint
 
 ENTRYPOINT ["docker-entrypoint"]
 CMD ["php-fpm"]
+
+#------------------------------------
+
+FROM php-fpm AS php-fpm-test
+
+RUN set -eux; \
+    composer install --prefer-dist --no-scripts --no-progress --no-suggest; \
+    composer clear-cache
+
+COPY Makefile .php_cs phpstan.neon ./
+
+#------------------------------------
+
+FROM nginx:1.17-alpine AS nginx
+
+COPY dev/docker/nginx/production.conf /etc/nginx/conf.d/default.conf
+
+COPY --from=php-fpm /app/public /app/public
+
+#------------------------------------
+
+FROM php-fpm AS deploy
+
+RUN apk add --no-cache openssh-client rsync
+
+COPY deployer.phar deploy.php ./
+
+#----------------------------------
+
+FROM php-fpm AS php-fpm-dev
+
+RUN set -eux; \
+    apk add --no-cache --virtual .build-deps $PHPIZE_DEPS; \
+    pecl install xdebug; \
+    docker-php-ext-enable xdebug
+
+COPY dev/docker/fpm/xdebug.ini $PHP_INI_DIR/conf.d/

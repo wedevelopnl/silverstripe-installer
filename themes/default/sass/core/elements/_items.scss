@@ -1,0 +1,28 @@
+//=======================================================
+//  ITEMS
+//=======================================================
+.item-first {
+    margin-right: $item-spacing;
+}
+
+.item-between {
+    margin-left: $item-spacing;
+    margin-right: $item-spacing;
+}
+
+.item-last {
+    margin-left: $item-spacing;
+}
+
+.item-left {
+    margin-right: auto;
+}
+
+.item-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.item-right {
+    margin-left: auto;
+}

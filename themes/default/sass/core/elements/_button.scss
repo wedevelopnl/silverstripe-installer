@@ -1,0 +1,43 @@
+.button {
+    height: $element-normal;
+    line-height: 1;
+    font-size: $element-size-normal;
+
+    &.is-text {
+        text-decoration: none;
+    }
+
+    // SQUARE
+    &.is-square {
+        padding-left: 0;
+        padding-right: 0;
+        min-width: $element-normal;
+
+        &:not(.is-rounded) {
+            border-radius: $radius;
+        }
+    }
+
+    // SIZES
+    @each $name, $pair in $elements {
+        $height: nth($pair, 1);
+        $size: nth($pair, 2);
+        $icon: nth($pair, 4);
+
+        &.is-#{$name} {
+            height: $height;
+            line-height: calc(#{$height} - (#{$control-border-width} * 2));
+            font-size: $size;
+
+            &.is-square {
+                &.is-#{$name} {
+                    min-width: $height;
+                }
+            }
+
+            .svg-icon {
+                font-size: $icon;
+            }
+        }
+    }
+}

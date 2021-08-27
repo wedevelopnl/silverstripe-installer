@@ -1,0 +1,30 @@
+//=======================================================
+//  LINK COLORS
+//=======================================================
+@each $name, $pair in $colors {
+    $color: nth($pair, 1);
+
+    .has-links-#{$name} {
+        a:not(.button) {
+            color: $color;
+        }
+    }
+
+    .has-hover-#{$name} {
+        a:not(.button) {
+            &:hover {
+                color: $color;
+            }
+        }
+    }
+
+    .has-active-#{$name} {
+        .is-active,
+        .section,
+        .current {
+            > a:not(.button) {
+                color: $color;
+            }
+        }
+    }
+}

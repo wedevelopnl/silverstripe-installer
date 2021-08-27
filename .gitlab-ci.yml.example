@@ -1,0 +1,98 @@
+image: docker:dind
+
+.ssh: &ssh
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | ssh-add -
+
+.docker-login: &docker-login
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+stages:
+  - build
+  - test
+  - acceptance
+  - production
+
+workflow:
+  rules:
+    - if: $CI_MERGE_REQUEST_IID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+variables:
+  APPLICATION_NAME: $CI_PROJECT_NAMESPACE-$CI_PROJECT_NAME
+  DOCKER_HOST: tcp://dind.dind.svc.cluster.local:2375/
+  DOCKER_DRIVER: overlay2
+  DOCKER_TLS_CERTDIR: ""
+  IMAGE_NGINX_TAG: $CI_REGISTRY_IMAGE/nginx:$CI_COMMIT_SHA
+  IMAGE_NGINX_LATEST_TAG: $CI_REGISTRY_IMAGE/nginx:latest
+  IMAGE_PHP_TAG: $CI_REGISTRY_IMAGE/php:$CI_COMMIT_SHA
+  IMAGE_PHP_LATEST_TAG: $CI_REGISTRY_IMAGE/php:latest
+  IMAGE_TEST_TAG: $CI_REGISTRY_IMAGE/php/test:$CI_COMMIT_SHA
+  IMAGE_DEPLOY_TAG: $CI_REGISTRY_IMAGE/php/deploy:$CI_COMMIT_SHA
+
+build:
+  stage: build
+  <<: *docker-login
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - docker build . --target php-fpm -t $IMAGE_PHP_TAG
+    - docker push $IMAGE_PHP_TAG
+    - docker build . --target php-fpm-test -t $IMAGE_TEST_TAG
+    - docker push $IMAGE_TEST_TAG
+    - docker build . --target nginx -t $IMAGE_NGINX_TAG
+    - docker push $IMAGE_NGINX_TAG
+    - docker build . --target deploy -t $IMAGE_DEPLOY_TAG
+    - docker push $IMAGE_DEPLOY_TAG
+
+test:
+  stage: test
+  <<: *docker-login
+  rules:
+    - if: $CI_MERGE_REQUEST_ID
+    - if: $CI_COMMIT_TAG
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - docker run $IMAGE_TEST_TAG make test
+
+#deploy to acceptance:
+  stage: acceptance
+  image: $IMAGE_DEPLOY_TAG
+  variables:
+    GIT_STRATEGY: none
+    FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY: 0
+  environment:
+    name: acceptance
+    url: https://acc.project-name.nl/
+  <<: *ssh
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  script:
+    - cd /app
+    - echo "Deploying to acceptance"
+    - php deployer.phar --version
+    - php deployer.phar deploy acceptance -vv
+
+deploy to production:
+  stage: production
+  image: $IMAGE_DEPLOY_TAG
+  variables:
+    GIT_STRATEGY: none
+    FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY: 0
+  environment:
+    name: production
+    url: https://project-name.nl/
+  <<: *ssh
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+  script:
+    - cd /app
+    - echo "Deploying to production"
+    - php deployer.phar --version
+    - php deployer.phar deploy production -vv

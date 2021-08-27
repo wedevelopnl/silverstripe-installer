@@ -2,14 +2,16 @@
 <html lang="$ContentLocale">
 <head>
     <% base_tag %>
-    <title>$Title - $SiteConfig.Title</title>
-    <meta name="description" content="$MetaDescription">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="shortcut icon" href="$ThemedResource('images/favicon.png')" />
+    <link rel="shortcut icon" href="$ThemeDir/images/logo-simple.svg">
+    $PageMetaTags
+    $SiteConfig.CustomHeadCode.RAW
 </head>
-<body>
+<body class="$ClassName.ShortName">
+<% include Navbar %>
+    $SiteConfig.CustomBodyCode.RAW
     $Layout
+<% include Footer %>
 </body>
 </html>

@@ -1,0 +1,22 @@
+//=======================================================
+//  LABEL
+//=======================================================
+.label,
+label {
+    font-size: $label-size;
+    font-weight: $label-weight;
+    margin-bottom: 0.5em;
+    display: block;
+}
+
+.no-label {
+    label.left {
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+        font-size: 0;
+        position: absolute;
+    }
+}

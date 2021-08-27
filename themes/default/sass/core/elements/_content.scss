@@ -1,0 +1,121 @@
+//=======================================================
+//  CONTENT
+//=======================================================
+a {
+    transition: $transition-1;
+
+    &.is-disabled {
+        pointer-events: none;
+        color: unset;
+        opacity: 0.33;
+    }
+
+    // STRETCHED
+    &.is-stretched {
+        position: static;
+
+        &::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            content: "";
+            pointer-events: auto;
+            z-index: auto;
+        }
+    }
+}
+
+.has-link-stretched {
+    position: relative;
+
+    a:not(.is-stretched) {
+        position: relative;
+        z-index: 10;
+    }
+}
+
+strong  {
+    color: unset;
+    font-weight: $weight-semibold;
+}
+
+address {
+    font-style: normal;
+}
+
+.content {
+    p,
+    dl,
+    ol,
+    ul,
+    blockquote,
+    pre,
+    table {
+        &:not(:last-child) {
+            margin-bottom: $block-spacing;
+        }
+    }
+}
+
+//=======================================================
+//  TITLES
+//=======================================================
+.title,
+h1,
+.content h1,
+h2,
+.content h2,
+h3,
+.content h3,
+h4,
+.content h4,
+h5,
+.content h5,
+h6,
+.content h6 {
+    font-family: $family-secondary;
+    font-weight: $title-weight;
+    margin-top: 0;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.content h1 {
+    font-size: $size-1;
+}
+
+.content h2 {
+    font-size: $size-2;
+}
+
+.content h3 {
+    font-size: $size-3;
+}
+
+.content h4 {
+    font-size: $size-4;
+}
+
+.content h5 {
+    font-size: $size-5;
+}
+
+.content h6 {
+    font-size: $size-6;
+}
+
+//=======================================================
+//  FONT SIZES
+//=======================================================
+.is-size-8 {
+    font-size: $size-8 !important;
+}
+
+.is-size-9 {
+    font-size: $size-9 !important;
+    line-height: 1.125em;
+}

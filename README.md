@@ -1,40 +1,94 @@
-# The Webmen silverstripe installer
-Extension on the default silverstripe installer
+# Webmen Default Silverstripe 4 Installer
+This project installs the latest stable SilverStripe 4 CMS release.
 
-## Usage
-Run
-```
-composer create-project thewebmen/silverstripe-installer . --ignore-platform-reqs
-```
+Included in this installer;
 
-Then use the following setup for docker:
+* SilverStripe 4
+* Docker environment with MariaDB/PHP-FPM/Nginx
+* PHP CSFixer
+* PHPStan
+* PHPUnit
+* Some default silverstripe packages (like thewebmen/silverstripe-elemental-grid, thewebmen/silverstripe-menustructure. Check `composer.json` for a overview with all packages)
+* Webpack
+* Bulma
 
-1. `docker-compose up --build`
-2. Open http://localhost:8080
+## Important notice
+* This repository should NOT contain a `composer.lock` file.
+  * But the `composer.lock` file SHOULD get included in the new project
+  * This is the reason the `composer.lock` is not included in the `.gitignore`
+* You should also check the `composer.json` file on a new project and update them where needed
 
+## How to use
 
-## Gulp
-The following gulp commands are available:
-- gulp (build js and sass and watch both)
-- gulp js (build js)
-- gulp watchjs (watch js)
-- gulp sass (build sass)
-- gulp watchsass (watch sass)
+### Installation
 
-Javascript is linted using eslint, make sure to enable eslint in your phpstorm
+* `git clone https://github.com/thewebmen/silverstripe-installer project-name/`
+* `cd project-name`
+* Change the host ports in `docker-compose.yml`, `env.docker` and in this readme to an unused number 
+* Run docker-compose up
+* Change the project name and description in `package.json`
+* Change the project name and description in `composer.json`
+* Change the name of this readme file and remove the "How to use and Important notice" chapter
+* Change the stable releases in `composer.json` to the installed minor releases
+
+### Menus
+
+On the default installation, there are some pre-defined menus with the following slugs;
+* main-nav
+* footer-top-nav
+* footer-bottom-nav
+
+This navigation's needs to get added in the `Menu` section, found in the Admin.
+
+## Docker
+`docker-compose up`\
+http://localhost:50080/
+
+**Default admin login:**\
+http://localhost:50080/admin \
+Username; admin\
+Password; admin
+
+## Database
+**Mariadb on port 50336**
+
+Server: mariadb\
+Name: silverstripe\  
+User: root\
+Password: password\
 
 ## Deployment
-Replace the following variables in deploy.php:
-- repository
-- hostname
-- user
-- deploy_path
+* Change the `repository` in `deploy.php` to the correct gitlab repository
+* Change the `host` and `user` for acceptance and production in `deploy.php`
+* `mv gitlab-ci.yml.example gitlab-ci.yml`
+* Edit the `gitlab-ci.yml` with the configuration you need
 
-## Testing
-To test the codestyle of your project run the command: `make test`.
+## PHP cs
+`make test`  
+`make fix-cs`  
+Could be useful to enable in phpstorm (settings -> search for 'php cli interpreter')
 
-## Requirements
+## JS / CSS
+**Please make sure the version in your `.nvmrc` is in sync with the `NODE_VERSION` argument in the `Dockerfile`**
 
-- Composer
-- NPM
-- Docker
+Set node version: `nvm use`  
+Build: `npm run build`  
+Watch: `npm run watch`  
+
+### Fontawesome
+
+At Webmen we use Fontawesome PRO. You can find the `.npmrc` key in BitWarden.
+
+## ESlint
+Could be useful to enable in phpstorm (settings -> search for 'eslint' -> automatic eslint configuration)
+
+## Dev build
+It is easier to do a dev build via the cli to avoid user rights issues  
+`make devbuild`  
+
+And there is also a `Make` command to run a dev/build with flush argument
+`make devbuildflush`
+
+
+## CMS icons
+https://silverstripe.github.io/silverstripe-pattern-lib/?selectedKind=Admin%2FIcons&selectedStory=Icon%20reference&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel

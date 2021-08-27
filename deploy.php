@@ -3,54 +3,73 @@ namespace Deployer;
 
 require 'recipe/common.php';
 
-set('application', 'silverstripe');
-set('repository', '<repository>');
-set('keep_releases', 3);
+set('allow_anonymous_stats', false);
+set('repository', 'kain.twm.eu/group-name/project-name.git');
+set('bin/php', '/usr/bin/php7.4');
 
-// Shared files/dirs between deploys
-set('shared_files', []);
+set('shared_files', ['.env']);
 set('shared_dirs', [
     'public/assets',
 ]);
 
-// Writable dirs by web server
 set('writable_dirs', [
-    'silverstripe-cache',
     'public/assets',
 ]);
 
+// acceptance
+host('default.wbmn.nl/acceptance')
+    ->stage('acceptance')
+    ->user('user')
+    ->set('deploy_path', '~/site')
+    ->addSshOption('UserKnownHostsFile', '/dev/null')
+    ->addSshOption('StrictHostKeyChecking', 'no');
+
 // production
-host('<hostname>')
+host('default.wbmn.nl/production')
     ->stage('production')
-    ->user('<user>')
-    ->set('deploy_path', '<deploy_path>')
+    ->user('flexcraft_prod')
+    ->set('deploy_path', '~/site')
     ->addSshOption('UserKnownHostsFile', '/dev/null')
     ->addSshOption('StrictHostKeyChecking', 'no');
 
 // Tasks
-desc('Deploy');
-task('deploy', [
-    'deploy:info',
+task('release', [
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
-    'deploy:update_code',
+    'deploy:upload',
+    'deploy:requirements',
     'deploy:shared',
     'deploy:writable',
-    'deploy:vendors',
-    'deploy:clear_paths',
     'deploy:silverstripe',
     'deploy:symlink',
+    'deploy:php:reload',
     'deploy:unlock',
-    'cleanup',
-    'success',
 ]);
 
-task('deploy:silverstripe-before', function () {
-    run('cd {{release_path}} && cp .env.{{stage}} .env');
-    run('cd {{release_path}}/public && cp .htaccess-{{stage}} .htaccess');
-    run('cd {{release_path}} && vendor/bin/sake dev/build');
+task('deploy:upload', function () {
+    upload(__DIR__ . '/', '{{release_path}}');
 });
 
-// [Optional] If deploy fails automatically unlock.
+task('deploy:requirements', function () {
+    run('cd {{release_path}} && curl -sS https://getcomposer.org/installer | {{bin/php}}');
+    run('cd {{release_path}} && {{bin/php}} composer.phar check-platform-reqs --no-dev');
+});
+
+task('deploy:silverstripe', function () {
+    run('cd {{release_path}} && {{bin/php}} vendor/silverstripe/framework/cli-script.php dev/build');
+});
+
+task('deploy:php:reload', function () {
+//    Please include the reload you need
+//    run('sudo systemctl reload php7.4-fpm');
+//    run('sudo systemctl reload apache2');
+});
+
+task('deploy', [
+    'release',
+    'cleanup',
+    'success',
+])->desc('Deploy your project');
+
 after('deploy:failed', 'deploy:unlock');
