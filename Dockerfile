@@ -39,7 +39,7 @@ COPY --from=node /usr/local/bin/node /usr/local/bin/node
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
 
-COPY .npmrc package.json package-lock.json webpack.config.js stylelint.config.js .stylelintignore .eslintrc.js ./
+COPY package.json package-lock.json webpack.config.js stylelint.config.js .stylelintignore .eslintrc.js .npmrc* ./
 RUN npm install
 RUN npm run build
 RUN rm -rf node_modules

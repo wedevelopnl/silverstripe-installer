@@ -79,6 +79,8 @@ Watch: `npm run watch`
 
 At Webmen we use Fontawesome PRO. You can find the `.npmrc` key in BitWarden.
 
+If you don't have Fontawesome PRO, remove FontAwesome PRO from `package.json`
+
 ## ESlint
 Could be useful to enable in phpstorm (settings -> search for 'eslint' -> automatic eslint configuration)
 
