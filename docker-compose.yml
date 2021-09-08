@@ -22,7 +22,7 @@ services:
 
   mariadb:
     image: mariadb:10.1
-    restart: always
+    restart: on-failure
     volumes:
       - mariadb-volume:/var/lib/mysql
     environment:
@@ -33,7 +33,7 @@ services:
 
   mailhog:
     image: mailhog/mailhog
-    restart: always
+    restart: on-failure
     ports:
       - 50025:8025
 
