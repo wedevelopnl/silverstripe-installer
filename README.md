@@ -4,11 +4,11 @@ This project installs the latest stable SilverStripe 4 CMS release.
 Included in this installer;
 
 * SilverStripe 4
-* Docker environment with MariaDB/PHP-FPM/Nginx
+* Docker environment with MariaDB/PHP-FPM/Nginx/Mailhog
 * PHP CSFixer
 * PHPStan
 * PHPUnit
-* Some default silverstripe packages (like thewebmen/silverstripe-elemental-grid, thewebmen/silverstripe-menustructure. Check `composer.json` for a overview with all packages)
+* Some default silverstripe packages (like thewebmen/silverstripe-elemental-grid, thewebmen/silverstripe-menustructure. Check `composer.json` for an overview with all packages)
 * Webpack
 * Bulma
 
@@ -24,12 +24,20 @@ Included in this installer;
 
 * `git clone https://github.com/thewebmen/silverstripe-installer project-name/`
 * `cd project-name`
-* Change the host ports in `docker-compose.yml`, `env.docker` and in this readme to an unused number 
-* Run docker-compose up
+* Change the host ports in `docker-compose.yml`, `.env` and in this readme to an unused number (1 to 65535)
+* Create a `.npmrc` with FontAwesome PRO keys (key found in BitWarden)
+* Run `docker-compose up`
 * Change the project name and description in `package.json`
 * Change the project name and description in `composer.json`
 * Change the name of this readme file and remove the "How to use and Important notice" chapter
 * Change the stable releases in `composer.json` to the installed minor releases
+
+### Overriding .env and using xDebug
+If you want to override the `.env` or use xDebug, you can use the `docker-compose.override.yaml.dist` in combination with a `.env.local`.
+
+* `cp docker-compose.override.yaml.dist docker-compose.override.yaml`
+* create a `.env.local` with the data you don't want to get exposed
+* Change target to `php-fmp` instead of `php-fpm-dev` if you want to disable xDebug
 
 ### Menus
 
@@ -91,6 +99,12 @@ It is easier to do a dev build via the cli to avoid user rights issues
 And there is also a `Make` command to run a dev/build with flush argument
 `make devbuildflush`
 
-
 ## CMS icons
 https://silverstripe.github.io/silverstripe-pattern-lib/?selectedKind=Admin%2FIcons&selectedStory=Icon%20reference&full=0&addons=1&stories=1&panelRight=0&addonPanel=storybook%2Factions%2Factions-panel
+
+## License
+See [License](LICENSE)
+
+## Development and contribution
+This repository is mostly used for internal use by Webmen, but we decided to publish the source code.
+If you want to contribute, please first create an issue, so we can discuss the change. 

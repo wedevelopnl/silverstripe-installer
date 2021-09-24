@@ -1,0 +1,9 @@
+version: '3.6'
+services:
+  silverstripe:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: php-fpm-dev
+    env_file:
+      - .env.local

@@ -1,5 +1,4 @@
 /silverstripe-cache/
-/.env
 /vendor/
 /public/_resources/
 /public/assets/.htaccess
@@ -9,3 +8,4 @@
 /.idea
 /themes/default/bundles
 /.npmrc
+/docker-compose.override.yml
