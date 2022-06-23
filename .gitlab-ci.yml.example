@@ -61,22 +61,22 @@ test:
     - docker run $IMAGE_TEST_TAG make test
 
 #deploy to acceptance:
-  stage: acceptance
-  image: $IMAGE_DEPLOY_TAG
-  variables:
-    GIT_STRATEGY: none
-    FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY: 0
-  environment:
-    name: acceptance
-    url: https://acc.project-name.nl/
-  <<: *ssh
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  script:
-    - cd /app
-    - echo "Deploying to acceptance"
-    - php deployer.phar --version
-    - php deployer.phar deploy acceptance -vv
+#  stage: acceptance
+#  image: $IMAGE_DEPLOY_TAG
+#  variables:
+#    GIT_STRATEGY: none
+#    FF_USE_LEGACY_KUBERNETES_EXECUTION_STRATEGY: 0
+#  environment:
+#    name: acceptance
+#    url: https://acc.project-name.nl/
+#  <<: *ssh
+#  rules:
+#    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#  script:
+#    - cd /app
+#    - echo "Deploying to acceptance"
+#    - php deployer.phar --version
+#    - php deployer.phar deploy acceptance -vv
 
 deploy to production:
   stage: production
