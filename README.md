@@ -68,8 +68,8 @@ Password: password\
 ## Deployment
 * Change the `repository` in `deploy.php` to the correct gitlab repository
 * Change the `host` and `user` for acceptance and production in `deploy.php`
-* `mv gitlab-ci.yml.example gitlab-ci.yml`
-* Edit the `gitlab-ci.yml` with the configuration you need
+* `mv .gitlab-ci.yml.example .gitlab-ci.yml`
+* Edit the `.gitlab-ci.yml` with the configuration you need
 
 ## PHP cs
 `make test`  
